@@ -31,6 +31,8 @@ public let USER_DEFAULTS_KEY = "ShareMenuUserDefaults"
 public let USER_DEFAULTS_EXTRA_DATA_KEY = "ShareMenuUserDefaultsExtraData"
 public let URL_SCHEME_INFO_PLIST_KEY = "AppURLScheme"
 public let HOST_APP_IDENTIFIER_INFO_PLIST_KEY = "HostAppBundleIdentifier"
+public let APP_GROUP = "AppGroup"
+public let SHARE_EXTENSION_GROUP = "ShareExtensionGroup"
 public let HOST_URL_SCHEME_INFO_PLIST_KEY = "HostAppURLScheme"
 
 public let REACT_SHARE_VIEW_BACKGROUND_COLOR_KEY = "ReactShareViewBackgroundColor"

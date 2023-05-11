@@ -15,15 +15,15 @@ import Social
 import RNShareMenu
 
 class ShareViewController: SLComposeServiceViewController {
-  var hostAppId: String?
+  var appGroup: String?
   var hostAppUrlScheme: String?
   var sharedItems: [Any] = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    if let hostAppId = Bundle.main.object(forInfoDictionaryKey: HOST_APP_IDENTIFIER_INFO_PLIST_KEY) as? String {
-      self.hostAppId = hostAppId
+    if let appGroup = Bundle.main.object(forInfoDictionaryKey: APP_GROUP) as? String {
+      self.appGroup = appGroup
     } else {
       print("Error: \(NO_INFO_PLIST_INDENTIFIER_ERROR)")
     }
@@ -57,11 +57,11 @@ class ShareViewController: SLComposeServiceViewController {
 
   func handlePost(_ items: [NSExtensionItem], extraData: [String:Any]? = nil) {
     DispatchQueue.global().async {
-      guard let hostAppId = self.hostAppId else {
+      guard let appGroup = self.appGroup else {
         self.exit(withError: NO_INFO_PLIST_INDENTIFIER_ERROR)
         return
       }
-      guard let userDefaults = UserDefaults(suiteName: "group.\(hostAppId)") else {
+      guard let userDefaults = UserDefaults(suiteName:appGroup) else {
         self.exit(withError: NO_APP_GROUP_ERROR)
         return
       }
@@ -103,11 +103,11 @@ class ShareViewController: SLComposeServiceViewController {
   }
 
   func storeExtraData(_ data: [String:Any]) {
-    guard let hostAppId = self.hostAppId else {
+    guard let appGroup = self.appGroup else {
       print("Error: \(NO_INFO_PLIST_INDENTIFIER_ERROR)")
       return
     }
-    guard let userDefaults = UserDefaults(suiteName: "group.\(hostAppId)") else {
+    guard let userDefaults = UserDefaults(suiteName:appGroup) else {
       print("Error: \(NO_APP_GROUP_ERROR)")
       return
     }
@@ -116,11 +116,11 @@ class ShareViewController: SLComposeServiceViewController {
   }
 
   func removeExtraData() {
-    guard let hostAppId = self.hostAppId else {
+    guard let appGroup = self.appGroup else {
       print("Error: \(NO_INFO_PLIST_INDENTIFIER_ERROR)")
       return
     }
-    guard let userDefaults = UserDefaults(suiteName: "group.\(hostAppId)") else {
+    guard let userDefaults = UserDefaults(suiteName: appGroup) else {
       print("Error: \(NO_APP_GROUP_ERROR)")
       return
     }
@@ -170,12 +170,12 @@ class ShareViewController: SLComposeServiceViewController {
         self.exit(withError: COULD_NOT_FIND_IMG_ERROR)
         return
       }
-      guard let hostAppId = self.hostAppId else {
+      guard let appGroup = self.appGroup else {
         self.exit(withError: NO_INFO_PLIST_INDENTIFIER_ERROR)
         return
       }
       guard let groupFileManagerContainer = FileManager.default
-              .containerURL(forSecurityApplicationGroupIdentifier: "group.\(hostAppId)")
+              .containerURL(forSecurityApplicationGroupIdentifier: appGroup)
       else {
         self.exit(withError: NO_APP_GROUP_ERROR)
         return
